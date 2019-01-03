@@ -1,0 +1,30 @@
+bool ShearTool()
+{
+	if (!OpenClipboard(NULL) || !EmptyClipboard())
+	{
+		printf("打开或清空剪切板出错！\n");
+		return false;
+	}
+	HWND hwnd = ::GetDesktopWindow();
+	HDC hDC = ::GetDC(hwnd); //根据窗口来确定截图的大概位置
+
+	RECT rect;
+	::GetClientRect(hwnd, &rect);
+	HDC hDCMem = ::CreateCompatibleDC(hDC);
+
+	HBITMAP hBitMap = ::CreateCompatibleBitmap(hDC, rect.right, rect.bottom);
+	HBITMAP hOldMap = (HBITMAP)::SelectObject(hDCMem, hBitMap);
+
+	::BitBlt(hDCMem, 0, 0, rect.right, rect.bottom, hDC, 0, 0, SRCCOPY); //红色部分确定图片的大小位置
+
+
+	CImage image;
+	image.Attach(hBitMap);
+	if (::OpenClipboard(NULL))
+	{
+		::EmptyClipboard();
+		SetClipboardData(CF_BITMAP, image);
+		::CloseClipboard();
+	}
+	return true;
+}
