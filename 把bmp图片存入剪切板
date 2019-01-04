@@ -1,0 +1,16 @@
+#include<stdio.h>
+#include <Windows.h>
+#include<atlimage.h>
+
+
+int main()
+{
+	HBITMAP HBitmap = (HBITMAP)LoadImage(NULL, L"C:\\8.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);//载入位图
+	if (::OpenClipboard(NULL))
+	{
+		EmptyClipboard();
+		SetClipboardData(CF_BITMAP, HBitmap);
+		CloseClipboard();
+	}
+	return 0;
+}
