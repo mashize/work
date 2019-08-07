@@ -2,6 +2,7 @@
 #include <windows.h>
 #include <shlobj.h>
 #include<tchar.h>
+//解决方法是：找到【项目属性】，点击【C++】里的【预处理器】，对【预处理器】进行编辑，在里面加入一段代码：_CRT_SECURE_NO_WARNINGS。
 //复制文件到剪贴板
 //没有加入错误判断，请自行修改
 int CopyFileToClipboard(const char szFileName[]);
